@@ -1,0 +1,1096 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#2E7D32">
+  <title>Eco Scan - Pengolahan Sampah Cerdas</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap');
+
+:root{
+  --green:#1B5E20;
+  --green-light:#66BB6A;
+  --green-accent:#4CAF50;
+  --green-pale:#E8F5E9;
+  --white:#fff;
+  --bg:#f5f8f7;
+  --text:#0d1b0d;
+  --muted:#666;
+  --border:#e0e8e6;
+  --shadow-sm:0 2px 4px rgba(27,94,32,0.06);
+  --shadow-md:0 4px 12px rgba(27,94,32,0.1);
+  --shadow-lg:0 8px 20px rgba(27,94,32,0.12);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Sora',system-ui,-apple-system,sans-serif;
+  background:linear-gradient(180deg,#f5f8f7 0%,#eef5f0 100%);
+  margin:0;color:var(--text);line-height:1.6;
+}
+a{color:var(--green);text-decoration:none;transition:color 0.2s}
+a:hover{color:var(--green-accent)}
+
+@keyframes fadeInUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%{opacity:1}50%{opacity:0.7}100%{opacity:1}}
+
+button{
+  cursor:pointer;border:none;font-weight:600;border-radius:10px;
+  transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+  font-family:inherit;font-size:0.95rem;
+}
+button:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+button:active{transform:scale(0.98)}
+
+header{
+  background:linear-gradient(135deg,var(--green) 0%,#2d6d35 100%);
+  color:var(--white);padding:16px;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:var(--shadow-md);position:relative;
+  overflow:hidden;
+}
+header::before{content:'';position:absolute;top:0;right:-50px;width:200px;height:200px;background:rgba(255,255,255,0.05);border-radius:50%;pointer-events:none}
+header h1{margin:0;font-size:1.4rem;font-weight:700;letter-spacing:-0.5px;position:relative;z-index:1}
+nav{display:flex;gap:6px;flex-wrap:wrap;position:relative;z-index:1}
+.nav-btn{
+  background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.25);
+  color:var(--white);padding:7px 14px;font-size:0.85rem;
+  backdrop-filter:blur(10px);transition:all 0.3s;
+}
+.nav-btn:hover{background:rgba(255,255,255,0.18);border-color:rgba(255,255,255,0.4)}
+.nav-btn.active{background:rgba(255,255,255,0.25);border-color:var(--white);box-shadow:0 0 15px rgba(255,255,255,0.1)}
+
+main{padding:16px;max-width:1200px;margin:0 auto;animation:fadeInUp 0.5s ease-out}
+
+h2{font-size:1.5rem;font-weight:700;color:var(--green);margin:24px 0 16px}
+h3{font-size:1.2rem;font-weight:700;color:var(--text);margin:18px 0 12px}
+h4{font-size:1rem;font-weight:600;margin:12px 0 6px;color:var(--green)}
+
+.hero{
+  background:linear-gradient(135deg,var(--green) 0%,var(--green-accent) 100%);
+  color:var(--white);padding:40px 20px;border-radius:16px;
+  text-align:center;margin-bottom:28px;box-shadow:var(--shadow-lg);
+  position:relative;overflow:hidden;animation:slideDown 0.6s ease-out;
+}
+.hero::before{content:'';position:absolute;top:-50%;right:-10%;width:300px;height:300px;background:rgba(255,255,255,0.1);border-radius:50%;animation:pulse 4s infinite}
+.hero::after{content:'';position:absolute;bottom:-50%;left:-5%;width:250px;height:250px;background:rgba(255,255,255,0.05);border-radius:50%}
+.hero h2{margin:0 0 12px;font-size:2rem;color:var(--white)}
+.hero p{margin:0 0 20px;opacity:0.95;font-size:1rem;line-height:1.6}
+.hero-btn{
+  background:var(--white);color:var(--green);padding:12px 24px;
+  font-weight:700;margin:0 6px;box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  position:relative;z-index:2;
+}
+.hero-btn:hover{background:#f0f8f5;transform:translateY(-3px);box-shadow:0 8px 16px rgba(0,0,0,0.2)}
+
+.stats-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:16px;margin-bottom:28px;
+}
+.stat-card{
+  background:var(--white);padding:20px;border-radius:12px;
+  text-align:center;box-shadow:var(--shadow-sm);
+  border:1px solid var(--border);transition:all 0.3s;
+  position:relative;overflow:hidden;
+}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),var(--green-light));transform:scaleX(0);transform-origin:left;transition:transform 0.3s}
+.stat-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:var(--green-accent)}
+.stat-card:hover::before{transform:scaleX(1)}
+.stat-card .number{font-size:2rem;font-weight:700;color:var(--green);margin-bottom:4px}
+.stat-card .label{font-size:0.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;font-weight:600}
+
+.panel{
+  background:var(--white);padding:20px;border-radius:12px;
+  box-shadow:var(--shadow-sm);margin-bottom:16px;display:none;
+  border:1px solid var(--border);animation:fadeInUp 0.4s ease-out;
+}
+.panel.active{display:block}
+
+.camera-wrap{
+  width:100%;max-width:640px;margin:0 auto 16px;border-radius:12px;
+  overflow:hidden;background:#000;box-shadow:var(--shadow-lg);
+  border:1px solid var(--border);
+}
+video{width:100%;height:auto;display:block}
+canvas{display:none}
+
+.controls{
+  display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:16px 0;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--green),var(--green-accent));
+  color:var(--white);padding:12px 20px;box-shadow:var(--shadow-md);
+}
+.btn-primary:hover{background:linear-gradient(135deg,var(--green-accent),var(--green))}
+.btn-secondary{
+  background:var(--green-pale);color:var(--green);padding:12px 20px;
+  border:1.5px solid var(--green);
+}
+.btn-secondary:hover{background:#d4edda;border-color:var(--green-accent)}
+button:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+
+.result-card{
+  background:linear-gradient(135deg,#e8f5e9 0%,#f1f8f5 100%);
+  border-left:5px solid var(--green);padding:16px;border-radius:10px;
+  margin:16px 0;display:none;box-shadow:var(--shadow-sm);
+  border:1px solid var(--border);animation:slideDown 0.4s ease-out;
+}
+.result-card.show{display:block}
+.result-card h3{margin:0 0 12px;color:var(--green);font-size:1.3rem}
+.waste-detail{font-size:0.9rem;color:var(--text);line-height:1.7}
+.waste-detail strong{color:var(--green);display:block;margin-top:8px;font-weight:700}
+
+.history-list{list-style:none;padding:0;margin:0}
+.history-item{
+  display:flex;gap:14px;align-items:flex-start;border-bottom:1px solid var(--border);
+  padding:14px 0;transition:all 0.2s;
+}
+.history-item:hover{background:rgba(76,175,80,0.03);margin-left:-4px;padding-left:4px}
+.history-item:last-child{border-bottom:none}
+.history-thumb{
+  width:84px;height:63px;object-fit:cover;border-radius:8px;
+  background:linear-gradient(135deg,#e8f5e9,#c8e6c9);
+  box-shadow:var(--shadow-sm);flex-shrink:0;
+}
+.history-meta{flex:1;font-size:0.9rem}
+.history-meta .name{font-weight:700;color:var(--green);margin-bottom:4px;font-size:1rem}
+.history-meta .time{color:var(--muted);font-size:0.75rem}
+
+.article-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:14px;margin:16px 0;
+}
+.article-card{
+  background:var(--white);border-radius:12px;padding:16px;
+  box-shadow:var(--shadow-sm);cursor:pointer;
+  transition:all 0.3s;border:1px solid var(--border);
+  position:relative;overflow:hidden;
+}
+.article-card::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,rgba(76,175,80,0.05),transparent);opacity:0;transition:opacity 0.3s;pointer-events:none}
+.article-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--green-accent)}
+.article-card:hover::before{opacity:1}
+.article-card h4{margin:0 0 8px;font-size:1rem;color:var(--green);position:relative;z-index:1}
+.article-card p{margin:0;font-size:0.85rem;color:var(--muted);position:relative;z-index:1}
+
+.badge-list{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:linear-gradient(135deg,var(--green-pale),#d4edda);
+  border-radius:24px;padding:8px 14px;font-size:0.85rem;
+  color:var(--green);font-weight:700;border:1.5px solid var(--border);
+  transition:all 0.2s;
+}
+.badge.earned{
+  background:linear-gradient(135deg,var(--green),var(--green-accent));
+  color:var(--white);border-color:var(--green);box-shadow:var(--shadow-sm);
+}
+.badge-icon{font-size:1.1rem}
+
+.quiz-card{
+  background:linear-gradient(135deg,#e8f5e9,#f1f8f5);
+  padding:16px;border-radius:10px;margin:14px 0;
+  border:1.5px solid var(--border);transition:all 0.2s;
+}
+.quiz-card:hover{box-shadow:var(--shadow-md);border-color:var(--green-accent)}
+.quiz-q{font-weight:700;color:var(--green);margin-bottom:12px;font-size:0.95rem}
+.quiz-opts{display:grid;gap:8px}
+.quiz-opt{
+  background:var(--white);border:1.5px solid var(--border);padding:10px;
+  border-radius:8px;text-align:left;font-size:0.9rem;cursor:pointer;
+  transition:all 0.2s;
+}
+.quiz-opt:hover{border-color:var(--green);background:#f9fdf8}
+.quiz-opt.selected{border-color:var(--green);background:rgba(102,187,106,0.12);font-weight:600}
+.quiz-opt.correct{background:linear-gradient(135deg,#c8e6c9,#a5d6a7);border-color:var(--green);font-weight:600}
+.quiz-opt.wrong{background:linear-gradient(135deg,#ffcdd2,#ef9a9a);border-color:#c62828;font-weight:600}
+
+footer{
+  text-align:center;padding:20px;color:var(--muted);font-size:0.85rem;
+  border-top:1px solid var(--border);margin-top:32px;
+}
+
+.clear-btn-icon{display:flex;justify-content:flex-end;margin-bottom:12px}
+.clear-btn-icon button{
+  background:linear-gradient(135deg,#ffcdd2,#ef9a9a);
+  color:#c62828;padding:8px 14px;font-size:0.8rem;box-shadow:var(--shadow-sm);
+}
+.clear-btn-icon button:hover{background:linear-gradient(135deg,#ef9a9a,#e57373)}
+
+@media(max-width:768px){
+  header{padding:12px}
+  header h1{font-size:1.2rem}
+  .hero{padding:28px 16px}
+  .hero h2{font-size:1.6rem}
+  .hero-btn{padding:10px 18px;font-size:0.9rem}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  nav{gap:4px}
+  .nav-btn{padding:6px 10px;font-size:0.75rem}
+  main{padding:12px}
+  .article-grid{grid-template-columns:1fr}
+  h2{font-size:1.3rem}
+}
+  </style>
+  <script>
+  // Enhanced CDN loader with multiple fallbacks and guaranteed loading
+  console.log('[Init] Starting script loader...');
+  
+  const cdnConfig={
+    tf:[
+      'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.17.0/dist/tf.min.js',
+      'https://unpkg.com/@tensorflow/tfjs@4.17.0/dist/tf.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/tensorflow.js/4.17.0/tf.min.js'
+    ],
+    mobilenet:[
+      'https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.1/dist/mobilenet.min.js',
+      'https://unpkg.com/@tensorflow-models/mobilenet@2.1.1/dist/mobilenet.min.js'
+    ]
+  };
+  
+  let tfLoaded = false;
+  let mobilenetLoaded = false;
+  
+  // Helper to safely update status elements
+  function updateStatusElement(id, text) {
+    const el = document.getElementById(id);
+    if(el) el.textContent = text;
+  }
+  
+  async function loadScriptFromUrl(url){
+    return new Promise((resolve,reject)=>{
+      const script=document.createElement('script');
+      script.src=url;
+      script.onload=()=>{
+        console.log(`[CDN] ✓ Loaded: ${url}`);
+        resolve();
+      };
+      script.onerror=()=>{
+        console.warn(`[CDN] ✗ Failed: ${url}`);
+        reject(new Error(`Failed to load ${url}`));
+      };
+      script.type='text/javascript';
+      document.head.appendChild(script);
+    });
+  }
+  
+  async function loadWithFallback(name,urls){
+    let lastError;
+    for(let i=0;i<urls.length;i++){
+      try{
+        console.log(`[CDN] Trying ${name} (${i+1}/${urls.length}): ${urls[i]}`);
+        await loadScriptFromUrl(urls[i]);
+        return true;
+      }catch(e){
+        lastError=e;
+        console.warn(`[CDN] Attempt ${i+1} failed for ${name}:`,e.message);
+      }
+    }
+    throw lastError;
+  }
+  
+  async function initializeScripts(){
+    try{
+      console.log('[CDN] Loading TensorFlow.js...');
+      
+      // Check if already loaded
+      if(window.tf && window.tf.version){
+        console.log('[CDN] TensorFlow.js already loaded, version:', window.tf.version);
+        updateStatusElement('tf-status', 'TF: ✓');
+        tfLoaded = true;
+      } else {
+        await loadWithFallback('TensorFlow.js',cdnConfig.tf);
+        updateStatusElement('tf-status', 'TF: ✓');
+        tfLoaded = true;
+      }
+      
+      // Wait for TensorFlow to initialize
+      await new Promise(r=>setTimeout(r,1000));
+      
+      console.log('[CDN] Loading MobileNet...');
+      
+      // Check if already loaded
+      if(window.mobilenet && window.mobilenet.load){
+        console.log('[CDN] MobileNet already loaded');
+        updateStatusElement('mn-status', 'MN: ✓');
+        mobilenetLoaded = true;
+      } else {
+        await loadWithFallback('MobileNet',cdnConfig.mobilenet);
+        updateStatusElement('mn-status', 'MN: ✓');
+        mobilenetLoaded = true;
+      }
+      
+      console.log('[CDN] ✅ All scripts loaded successfully');
+      console.log('[CDN] window.tf:', typeof window.tf);
+      console.log('[CDN] window.mobilenet:', typeof window.mobilenet);
+      
+      // Fire custom event
+      document.dispatchEvent(new Event('scriptsLoaded'));
+    }catch(e){
+      console.error('[CDN] ERROR: Failed to load critical scripts',e);
+      updateStatusElement('model-status', '❌ Gagal memuat library AI. Periksa koneksi internet.');
+      document.dispatchEvent(new Event('scriptsLoadFailed'));
+    }
+  }
+  
+  // Start loading immediately
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',initializeScripts);
+  }else{
+    initializeScripts();
+  }
+  </script>
+<body>
+  <header>
+    <h1>🌱 Eco Scan</h1>
+    <nav>
+      <button class="nav-btn active" data-panel="home">Home</button>
+      <button class="nav-btn" data-panel="scan">Scan</button>
+      <button class="nav-btn" data-panel="history">History</button>
+      <button class="nav-btn" data-panel="edu">Edukasi</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HOME PANEL -->
+    <section id="home" class="panel active">
+      <div class="hero">
+        <h2>Identifikasi Sampah Anda</h2>
+        <p>Gunakan kamera untuk mengenali jenis sampah dan pelajari cara pengolahannya</p>
+        <button class="hero-btn" onclick="switchPanel('scan')">🎥 Mulai Scan</button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="number" id="stat-scans">0</div>
+          <div class="label">Scan</div>
+        </div>
+        <div class="stat-card">
+          <div class="number" id="stat-saved">0</div>
+          <div class="label">Daur Ulang</div>
+        </div>
+        <div class="stat-card">
+          <div class="number" id="stat-co2">0</div>
+          <div class="label">CO₂ (-kg)</div>
+        </div>
+        <div class="stat-card">
+          <div class="number" id="stat-progress">0%</div>
+          <div class="label">Progress</div>
+        </div>
+      </div>
+
+      <h3>Artikel Edukasi</h3>
+      <div class="article-grid">
+        <div class="article-card" onclick="switchPanel('edu'); showEducation('pisah');">
+          <h4>📋 Cara Memilah</h4>
+          <p>Panduan memisahkan sampah dengan benar</p>
+        </div>
+        <div class="article-card" onclick="switchPanel('edu'); showEducation('plastik');">
+          <h4>♻️ Dampak Plastik</h4>
+          <p>Pengaruh sampah plastik pada lingkungan</p>
+        </div>
+        <div class="article-card" onclick="switchPanel('edu'); showEducation('diy');">
+          <h4>🎨 DIY Daur Ulang</h4>
+          <p>Kreatifitas dari limbah rumah tangga</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCAN PANEL -->
+    <section id="scan" class="panel">
+      <h2>🎥 Scan Sampah</h2>
+      <div class="camera-wrap">
+        <video id="video" autoplay playsinline muted></video>
+        <canvas id="capture-canvas"></canvas>
+      </div>
+
+      <div class="controls">
+        <button class="btn-primary" id="start-btn">Aktifkan Kamera</button>
+        <button class="btn-primary" id="capture-btn" disabled>📸 Scan Sekarang</button>
+        <button class="btn-secondary" id="stop-btn" disabled>Hentikan</button>
+      </div>
+
+      <div id="result" class="result-card">
+        <h3 id="waste-type">-</h3>
+        <div class="waste-detail">
+          <strong>Kategori: <span id="waste-category">-</span></strong>
+          <strong>Dapat Didaur Ulang: <span id="waste-recyclable">-</span></strong>
+          <strong>Cara Pengolahan:</strong>
+          <p id="waste-handling" style="margin:4px 0">-</p>
+        </div>
+      </div>
+
+      <div id="model-status-box" style="
+        background:linear-gradient(135deg,#e8f5e9,#f1f8f5);
+        border:1.5px solid #66bb6a;
+        border-radius:10px;
+        padding:14px;
+        margin-top:16px;
+        font-size:0.9rem;
+      ">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+          <div style="flex:1">
+            <p id="model-status" style="margin:0;color:#1b5e20;font-weight:600">⏳ Memuat model AI...</p>
+            <p style="margin:8px 0 0;color:#666;font-size:0.85rem">Tunggu sampai selesai. Pastikan koneksi internet atau gunakan versi offline.</p>
+            <p style="margin:6px 0 0;color:#666;font-size:0.75rem">
+              <span id="tf-status">TF: -</span> | <span id="mn-status">MN: -</span>
+            </p>
+            <p style="margin:8px 0 0;color:#666;font-size:0.75rem">
+              <small>💡 Jika masih gagal setelah 10 detik, tekan tombol Debug untuk melihat error detail atau coba muat ulang halaman.</small>
+            </p>
+          </div>
+          <button onclick="showDebugInfo()" style="
+            background:transparent;border:1px solid #66bb6a;
+            color:#1b5e20;padding:6px 10px;font-size:0.75rem;border-radius:6px;
+            white-space:nowrap;flex-shrink:0;cursor:pointer;
+          ">🔧 Debug</button>
+        </div>
+      </div>
+
+      <div id="debug-panel" style="
+        display:none;
+        background:#f5f5f5;
+        border:1px solid #ddd;
+        border-radius:8px;
+        padding:12px;
+        margin-top:12px;
+        font-family:monospace;
+        font-size:0.75rem;
+        max-height:200px;
+        overflow-y:auto;
+      ">
+        <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+          <strong>Debug Console</strong>
+          <button onclick="document.getElementById('debug-panel').style.display='none'" style="
+            background:transparent;border:none;color:#666;cursor:pointer;font-weight:700
+          ">✕</button>
+        </div>
+        <div id="debug-logs" style="color:#333;max-height:150px;overflow-y:auto">
+          [Logs akan muncul di sini]
+        </div>
+      </div>
+    </section>
+
+    <!-- HISTORY PANEL -->
+    <section id="history" class="panel">
+      <h2>📜 History Scan</h2>
+      <div class="clear-btn-icon">
+        <button onclick="clearHistoryData()" class="clear-btn-icon">🗑️ Hapus History</button>
+      </div>
+      <ul id="history-list" class="history-list">
+        <li style="padding:12px;color:var(--muted);text-align:center">Belum ada history</li>
+      </ul>
+    </section>
+
+    <!-- EDUCATION PANEL -->
+    <section id="edu" class="panel">
+      <h2>📚 Edukasi Interaktif</h2>
+      
+      <div style="margin-bottom:20px">
+        <h3>Jenis Sampah</h3>
+        <div class="article-grid">
+          <div class="article-card" onclick="showWasteType('organik')">
+            <h4>🍃 Organik</h4>
+            <p>Sisa makanan & daun</p>
+          </div>
+          <div class="article-card" onclick="showWasteType('plastik')">
+            <h4>🔵 Plastik</h4>
+            <p>Botol & kemasan</p>
+          </div>
+          <div class="article-card" onclick="showWasteType('kertas')">
+            <h4>📄 Kertas</h4>
+            <p>Kardus & cetak</p>
+          </div>
+          <div class="article-card" onclick="showWasteType('logam')">
+            <h4>⚙️ Logam</h4>
+            <p>Kaleng & tutup</p>
+          </div>
+          <div class="article-card" onclick="showWasteType('b3')">
+            <h4>☠️ B3</h4>
+            <p>Bahan berbahaya</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="edu-content" style="display:none">
+        <button onclick="switchPanel('edu')" style="margin-bottom:12px;background:var(--green-pale);color:var(--green)">← Kembali</button>
+        <div id="edu-body"></div>
+      </div>
+
+      <div id="quiz-section" style="margin-top:20px">
+        <h3>Quiz Pengetahuan</h3>
+        <div id="quiz-container"></div>
+      </div>
+
+      <div style="margin-top:20px">
+        <h3>Badge yang Diraih</h3>
+        <div class="badge-list" id="badge-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Eco Scan © 2026 — Aplikasi identifikasi sampah untuk lingkungan lebih baik</p>
+  </footer>
+
+  <script>
+// === DATA WASTE CLASSIFICATION ===
+const wasteData={
+  organik:{name:'Sampah Organik',category:'Organik',recyclable:'Ya',handling:'Kompos atau pengolahan ADIPT (Alat Daur Instan Pupuk Tanaman)',treatment:'dapat disimpan dalam wadah gelap berudara untuk fermentasi biologis',tips:'Pisahkan dari sampah lain, hindari daging/ikan untuk home composting'},
+  plastik:{name:'Sampah Plastik',category:'Plastik',recyclable:'Bergantung',handling:'Daur ulang botol/tas ke pellet atau kreasi kerajinan',treatment:'cuci dan keringkan sebelum dikumpulkan ke pengepul',tips:'Hindari plastik multilayer, pilih plastik berlabel recycle triangle'},
+  kertas:{name:'Sampah Kertas',category:'Kertas',recyclable:'Ya',handling:'Daur ulang menjadi kertas baru atau pulp',treatment:'jangan basahkan, kumpulkan dalam karung kering',tips:'Pisahkan kardus berlaminasi dari kertas biasa'},
+  logam:{name:'Sampah Logam',category:'Logam',recyclable:'Ya',handling:'Lelang ke pengepul, dilumer untuk produk baru',treatment:'keringkan untuk mencegah karat',tips:'Pisahkan jenis logam (besi, aluminium) bila memungkinkan'},
+  b3:{name:'Sampah B3 (Berbahaya)',category:'B3',recyclable:'Tidak',handling:'Serahkan ke TPA khusus B3 atau fasilitas penanganan limbah bersertifikat',treatment:'simpan terpisah di tempat kering dan aman',tips:'Termasuk baterai, elektronik, cat, pestisida, aki'}
+};
+
+const educationContent={
+  pisah:{title:'Cara Memilah Sampah',body:`
+    <h4>Panduan Memilah Sampah Rumah Tangga</h4>
+    <ol>
+      <li><strong>Sediakan wadah terpisah</strong> minimal 2-3 tempat sampah</li>
+      <li><strong>Organik:</strong> Sisa makanan, daun, ranting → Kompos</li>
+      <li><strong>Anorganik:</strong> Plastik, kertas, logam, kaca → Didaur ulang</li>
+      <li><strong>B3:</strong> Baterai, elektronik, cat → TPA khusus</li>
+      <li><strong>Cuci bersih</strong> kemasan sebelum didaur ulang</li>
+    </ol>
+    <p style="background:var(--green-pale);padding:8px;border-radius:6px">💡 <strong>Tips:</strong> Mula dengan 2 wadah (organik & anorganik) lalu berkembang</p>
+  `},
+  plastik:{title:'Dampak Sampah Plastik',body:`
+    <h4>Bagaimana Plastik Merusak Lingkungan?</h4>
+    <ul>
+      <li><strong>600 juta ton</strong> sampah plastik per tahun global</li>
+      <li>Plastik butuh <strong>450+ tahun</strong> untuk terurai</li>
+      <li>Mikroplastik masuk ke laut → makanan laut → tubuh manusia</li>
+      <li>Mencemari tanah dan mengganggu ekosistem</li>
+    </ul>
+    <h4>Solusi</h4>
+    <ul style="background:var(--green-pale);padding:8px;border-radius:6px">
+      <li>✅ Gunakan tas kain, botol reusable</li>
+      <li>✅ Pilih produk biodegradable</li>
+      <li>✅ Daur ulang plastik berkualitas</li>
+      <li>❌ Hindari sekali pakai</li>
+    </ul>
+  `},
+  diy:{title:'DIY Daur Ulang',body:`
+    <h4>Proyek Kreatif dari Limbah</h4>
+    <ul>
+      <li><strong>Pot tanaman</strong> dari botol plastik bekas</li>
+      <li><strong>Kotak penyimpanan</strong> dari kardus cat</li>
+      <li><strong>Tas/dompet</strong> dari plastik bekas laminating</li>
+      <li><strong>Tas belanja</strong> dari kain sisa jahit</li>
+      <li><strong>Dekorasi dinding</strong> dari botol bekas</li>
+      <li><strong>Alas pot</strong> dari ban bekas</li>
+    </ul>
+    <p style="background:var(--green-pale);padding:8px;border-radius:6px">🎨 <strong>Kreativitas tanpa batas:</strong> Limbah adalah bahan baku berharga!</p>
+  `}
+};
+
+const quizData=[
+  {q:'Berapa lama plastik terurai di alam?',opts:['5 tahun','50 tahun','450+ tahun','Tidak pernah'],ans:2},
+  {q:'Sampah organik terbaik diproses menjadi?',opts:['Limbah','Kompos','Cairan','Bahan bakar'],ans:1},
+  {q:'Mana yang bukan termasuk B3?',opts:['Baterai','Kertas bekas','Pestisida','Air limbah'],ans:1},
+  {q:'Botol plastik diberi label segitiga. Angka berapa paling aman daur ulang?',opts:['1-2','3-4','5-6','Semua aman'],ans:0}
+];
+
+// === STATE ===
+let model=null;
+let video=document.getElementById('video');
+let canvas=document.getElementById('capture-canvas');
+let stream=null;
+let stats={scans:0,total:0,co2:0,badges:[]};
+let quizAnswers=new Map();
+let debugLogs=[];
+
+// Capture console logs
+const originalLog=console.log;
+const originalError=console.error;
+const originalWarn=console.warn;
+
+console.log=function(...args){
+  originalLog.apply(console,args);
+  addDebugLog('LOG: '+args.join(' '));
+};
+console.error=function(...args){
+  originalError.apply(console,args);
+  addDebugLog('ERROR: '+args.join(' '));
+};
+console.warn=function(...args){
+  originalWarn.apply(console,args);
+  addDebugLog('WARN: '+args.join(' '));
+};
+
+function addDebugLog(msg){
+  debugLogs.push(new Date().toLocaleTimeString()+' - '+msg);
+  if(debugLogs.length>50) debugLogs.shift();
+}
+
+function showDebugInfo(){
+  let panel=document.getElementById('debug-panel');
+  panel.style.display=panel.style.display==='none'?'block':'none';
+  
+  let tfStatus=window.tf?'✓':'-';
+  let mnStatus=window.mobilenet?'✓':'-';
+  document.getElementById('tf-status').textContent='TF: '+tfStatus;
+  document.getElementById('mn-status').textContent='MN: '+mnStatus;
+  
+  let html=debugLogs.map(log=>'<div>'+escapeHtml(log)+'</div>').join('');
+  html+='<div style="margin-top:10px;border-top:1px solid #ccc;padding-top:10px;color:#999"><small>window.tf: '+typeof window.tf+'</small></div>';
+  html+='<div><small>window.mobilenet: '+typeof window.mobilenet+'</small></div>';
+  if(model) html+='<div style="color:#4caf50"><small>✓ Model loaded</small></div>';
+  
+  document.getElementById('debug-logs').innerHTML=html;
+}
+
+function escapeHtml(text){
+  return text.replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
+}
+
+// === INITIALIZATION ===
+async function init(){
+  console.log('[INIT] Starting initialization...');
+  
+  // Monitor script loading progress
+  document.addEventListener('scriptsLoaded',()=>{
+    console.log('[INIT] Scripts loaded event received');
+    showDebugInfo(); // Show debug status
+  });
+  
+  document.addEventListener('scriptsLoadFailed',()=>{
+    console.error('[INIT] Scripts load failed event received');
+    showDebugInfo(); // Show debug status
+  });
+  
+  // Check scripts every 2 seconds
+  setInterval(()=>{
+    let tfReady=window.tf?true:false;
+    let mnReady=window.mobilenet?true:false;
+    if(tfReady || mnReady){
+      let status=`TF: ${tfReady?'✓':'-'} | MN: ${mnReady?'✓':'-'}`;
+      document.getElementById('tf-status').textContent='TF: '+(tfReady?'✓':'-');
+      document.getElementById('mn-status').textContent='MN: '+(mnReady?'✓':'-');
+    }
+  },2000);
+  
+  loadStats();
+  renderStats();
+  renderQuiz();
+  renderBadges();
+  // Load model in background
+  loadModel();
+  // Register nav buttons
+  document.querySelectorAll('.nav-btn').forEach(btn=>{
+    btn.addEventListener('click',e=>{
+      switchPanel(e.target.dataset.panel);
+    });
+  });
+  // Register scan buttons
+  document.getElementById('start-btn').addEventListener('click',startCamera);
+  document.getElementById('capture-btn').addEventListener('click',captureAndAnalyze);
+  document.getElementById('stop-btn').addEventListener('click',stopCamera);
+}
+
+function switchPanel(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`[data-panel="${id}"]`).classList.add('active');
+}
+
+function showEducation(type){
+  let content=educationContent[type];
+  if(content){
+    document.getElementById('edu-content').style.display='none';
+    document.getElementById('edu-body').innerHTML='<button onclick="switchPanel(\'edu\')" style="margin-bottom:12px;background:var(--green-pale);color:var(--green)">← Kembali</button><h3>'+content.title+'</h3>'+content.body;
+  }
+}
+
+function showWasteType(type){
+  let waste=wasteData[type];
+  if(waste){
+    let html=`<button onclick="switchPanel('edu')" style="margin-bottom:12px;background:var(--green-pale);color:var(--green)">← Kembali</button>
+      <h3>${waste.name}</h3>
+      <ul>
+        <li><strong>Kategori:</strong> ${waste.category}</li>
+        <li><strong>Dapat Didaur Ulang:</strong> ${waste.recyclable}</li>
+        <li><strong>Cara Pengolahan:</strong> ${waste.handling}</li>
+        <li><strong>Penanganan:</strong> ${waste.treatment}</li>
+        <li><strong>Tips:</strong> ${waste.tips}</li>
+      </ul>`;
+    document.getElementById('edu-body').innerHTML=html;
+    document.getElementById('edu-content').style.display='block';
+  }
+}
+
+function renderQuiz(){
+  let html='';
+  quizData.forEach((q,i)=>{
+    html+=`<div class="quiz-card"><div class="quiz-q">${i+1}. ${q.q}</div><div class="quiz-opts">`;
+    q.opts.forEach((opt,j)=>{
+      let sel=quizAnswers.get(i)===j?'selected':'';
+      html+=`<div class="quiz-opt ${sel}" onclick="answerQuiz(${i},${j},${q.ans})">${opt}</div>`;
+    });
+    html+='</div></div>';
+  });
+  document.getElementById('quiz-container').innerHTML=html;
+}
+
+function answerQuiz(qIdx,optIdx,correct){
+  quizAnswers.set(qIdx,optIdx);
+  renderQuiz();
+  if(optIdx===correct){
+    addBadge('Quiz '+qIdx);
+    document.querySelector(`[onclick="answerQuiz(${qIdx},${optIdx},${correct})"]`).classList.add('correct');
+  }else{
+    document.querySelector(`[onclick="answerQuiz(${qIdx},${optIdx},${correct})"]`).classList.add('wrong');
+  }
+}
+
+function renderBadges(){
+  let html='';
+  let badges=['Pemula','Daur Ulang','Eco Warrior','Pengetahuan'];
+  badges.forEach(b=>{
+    let earned=stats.badges.includes(b);
+    html+=`<span class="badge ${earned?'earned':''}">${b} ${earned?'✅':''}</span>`;
+  });
+  document.getElementById('badge-list').innerHTML=html;
+}
+
+function addBadge(badge){
+  if(!stats.badges.includes(badge)){
+    stats.badges.push(badge);
+    saveStats();
+    renderBadges();
+  }
+}
+
+// === CAMERA & MODEL ===
+async function loadModel(){
+  const maxRetries=3;
+  let attempt=0;
+  const updateStatus=(msg,isError=false)=>{
+    let el=document.getElementById('model-status');
+    if(el){
+      el.textContent=msg;
+      if(isError) el.style.color='#d32f2f';
+      else el.style.color='inherit';
+    }
+    console.log(`[MODEL] ${msg}`);
+  };
+  
+  // Wait for scripts to be available
+  const waitForScripts=()=>new Promise((resolve,reject)=>{
+    const checkScripts=()=>{
+      if(window.tf && window.mobilenet){
+        console.log('[MODEL] Scripts ready. TF.js and MobileNet available.');
+        resolve();
+      }
+    };
+    
+    // Check immediately
+    checkScripts();
+    
+    // If not ready, listen to custom events
+    const onScriptsLoaded=()=>{
+      checkScripts();
+      resolve();
+    };
+    
+    const onScriptsFailed=()=>{
+      console.error('[MODEL] Scripts failed to load');
+      reject(new Error('CDN scripts failed to load'));
+    };
+    
+    document.addEventListener('scriptsLoaded',onScriptsLoaded);
+    document.addEventListener('scriptsLoadFailed',onScriptsFailed);
+    
+    // Timeout after 20s
+    setTimeout(()=>{
+      document.removeEventListener('scriptsLoaded',onScriptsLoaded);
+      document.removeEventListener('scriptsLoadFailed',onScriptsFailed);
+      if(!window.tf || !window.mobilenet){
+        reject(new Error('Scripts not loaded after 20s'));
+      }
+    },20000);
+  });
+  
+  const attemptLoad=async()=>{
+    attempt++;
+    try{
+      updateStatus(`⏳ Memuat model AI (attempt ${attempt}/${maxRetries})...`);
+      console.log(`[MODEL] Loading MobileNet attempt ${attempt}/${maxRetries}`);
+      
+      // First, ensure scripts are loaded
+      await waitForScripts();
+      
+      // Check if mobilenet is available
+      if(!window.mobilenet || !window.mobilenet.load){
+        throw new Error('window.mobilenet.load tidak tersedia. Periksa CDN berhasil?');
+      }
+      
+      // Load model with timeout
+      const timeoutPromise=new Promise((r,x)=>setTimeout(()=>x(new Error('Model loading timeout (30s)')),30000));
+      const modelPromise=window.mobilenet.load();
+      model=await Promise.race([modelPromise,timeoutPromise]);
+      
+      console.log('[MODEL] ✅ Model berhasil dimuat');
+      updateStatus('✅ Model AI siap. Silakan aktifkan kamera untuk memulai scan.');
+      return true;
+    }catch(e){
+      console.error(`[MODEL] Attempt ${attempt} gagal:`,e.message);
+      if(attempt<maxRetries){
+        updateStatus(`⚠️ Gagal memuat (${attempt}/${maxRetries}). Retry dalam 3 detik...`,true);
+        await new Promise(r=>setTimeout(r,3000));
+        return attemptLoad();
+      }else{
+        console.error('[MODEL] Semua attempt gagal. Menggunakan fallback mode.');
+        activateFallbackMode(e);
+        return false;
+      }
+    }
+  };
+  
+  attemptLoad();
+}
+
+function activateFallbackMode(error){
+  document.getElementById('model-status').innerHTML=
+    `⚠️ Model AI gagal dimuat (${error.message})`;
+  document.getElementById('model-status').style.color='#f57c00';
+  console.error('[MODEL] fallback activated, model unavailable');
+  document.getElementById('capture-btn').disabled=true;
+}
+
+
+
+async function startCamera(){
+  try{
+    let constraints={video:{facingMode:'environment',width:{ideal:1280},height:{ideal:720}},audio:false};
+    stream=await navigator.mediaDevices.getUserMedia(constraints);
+    video.srcObject=stream;
+    video.onloadedmetadata=()=>video.play();
+    document.getElementById('start-btn').disabled=true;
+    document.getElementById('stop-btn').disabled=false;
+    if(model) document.getElementById('capture-btn').disabled=false;
+    
+    let statusMsg='🎥 Kamera aktif.';
+    if(model){
+      statusMsg+=' Arahkan ke sampah dan tekan Scan.';
+    }else{
+      statusMsg+=' Model AI belum siap. Periksa koneksi atau script.';
+    }
+    document.getElementById('model-status').textContent=statusMsg;
+    console.log('[Camera] Kamera berhasil diaktifkan');
+  }catch(e){
+    console.error('[Camera] Error:',e);
+    let errMsg='❌ Tidak dapat mengakses kamera. ';
+    if(e.name==='NotAllowedError'){
+      errMsg+='Berikan izin akses kamera di pengaturan browser.';
+    }else if(e.name==='NotFoundError'){
+      errMsg+='Perangkat tidak memiliki kamera.';
+    }else if(e.name==='NotReadableError'){
+      errMsg+='Kamera sedang digunakan aplikasi lain.';
+    }else{
+      errMsg+='Gunakan HTTPS atau localhost. '+e.message;
+    }
+    document.getElementById('model-status').textContent=errMsg;
+    alert(errMsg);
+  }
+}
+
+function stopCamera(){
+  if(stream){
+    stream.getTracks().forEach(t=>t.stop());
+    stream=null;
+  }
+  document.getElementById('start-btn').disabled=false;
+  document.getElementById('stop-btn').disabled=true;
+  document.getElementById('capture-btn').disabled=true;
+  document.getElementById('model-status').textContent='Kamera dihentikan.';
+}
+
+async function captureAndAnalyze(){
+  if(!stream){
+    alert('Aktifkan kamera terlebih dahulu');
+    return;
+  }
+  
+  let ctx=canvas.getContext('2d');
+  canvas.width=video.videoWidth||640;
+  canvas.height=video.videoHeight||480;
+  ctx.drawImage(video,0,0);
+  
+  try{
+    if(!model){
+      alert('⚠️ Model AI tidak tersedia. Periksa koneksi internet atau coba muat ulang.');
+
+      return;
+    }
+    
+    document.getElementById('model-status').textContent='⏳ Menganalisis gambar...';
+    console.log('[SCAN] Classifying image...');
+    
+    // Use window.mobilenet if available as fallback
+    let preds;
+    if(model && typeof model.classify==='function'){
+      preds=await model.classify(canvas);
+    }else if(window.mobilenet && model){
+      preds=await model.classify(canvas);
+    }else{
+      throw new Error('Model tidak siap untuk klasifikasi');
+    }
+    
+    if(!preds || preds.length===0){
+      document.getElementById('model-status').textContent='❌ Tidak ada prediksi. Coba lagi dengan sudut berbeda.';
+      console.warn('[SCAN] No predictions returned');
+      return;
+    }
+    
+    let top=preds[0];
+    console.log('[SCAN] Prediction:',top.className,'Confidence:',top.probability);
+    
+    // Try to match with waste categories
+    let matched=null;
+    let topClassName=top.className.toLowerCase();
+    Object.keys(wasteData).forEach(k=>{
+      if(topClassName.includes(k) || topClassName.includes(wasteData[k].name.split(' ')[0].toLowerCase())){
+        matched=k;
+      }
+    });
+    
+    if(!matched) matched=classifyByKeyword(topClassName);
+    
+    if(matched){
+      let waste=wasteData[matched];
+      showResult(waste);
+      addToHistory(matched,waste,canvas.toDataURL('image/jpeg',0.7));
+      stats.scans++;
+      stats.total++;
+      stats.co2+=0.5;
+      saveStats();
+      renderStats();
+      document.getElementById('model-status').textContent=`✅ Terdeteksi: ${waste.name} (${(top.probability*100).toFixed(1)}% yakin)`;
+    }else{
+      document.getElementById('model-status').textContent=`⚠️ Jenis sampah tidak dikenali: ${top.className}.`;
+    }
+  }catch(e){
+    console.error('[SCAN] Error:',e);
+    document.getElementById('model-status').textContent='❌ Error saat menganalisis. Coba lagi.';
+    alert('Error: '+e.message);
+  }
+}
+
+function classifyByKeyword(text){
+  let lower=text.toLowerCase();
+  if(lower.includes('food')|| lower.includes('leaf')|| lower.includes('vegetable')) return 'organik';
+  if(lower.includes('bottle')|| lower.includes('plastic')|| lower.includes('bag')) return 'plastik';
+  if(lower.includes('paper')|| lower.includes('cardboard')|| lower.includes('box')) return 'kertas';
+  if(lower.includes('can')|| lower.includes('aluminum')|| lower.includes('metal')) return 'logam';
+  return null;
+}
+
+function showResult(waste){
+  document.getElementById('waste-type').textContent=waste.name;
+  document.getElementById('waste-category').textContent=waste.category;
+  document.getElementById('waste-recyclable').textContent=waste.recyclable;
+  document.getElementById('waste-handling').textContent=waste.handling;
+  document.querySelector('.result-card').classList.add('show');
+}
+
+// === HISTORY ===
+function addToHistory(key,waste,image){
+  let h=localStorage.getItem('eco_history');
+  let arr=h?JSON.parse(h):[];
+  arr.unshift({key,name:waste.name,category:waste.category,image,ts:Date.now()});
+  if(arr.length>100) arr.pop();
+  localStorage.setItem('eco_history',JSON.stringify(arr));
+  renderHistory();
+}
+
+function renderHistory(){
+  let h=localStorage.getItem('eco_history');
+  let arr=h?JSON.parse(h):[];
+  let html='';
+  if(arr.length===0){
+    html='<li style="padding:12px;color:var(--muted);text-align:center">Belum ada history</li>';
+  }else{
+    html=arr.map(item=>`
+      <li class="history-item">
+        <img src="${item.image}" alt="thumbnail" class="history-thumb" loading="lazy">
+        <div class="history-meta">
+          <div class="name">${item.name}</div>
+          <div>${item.category}</div>
+          <div class="time">${new Date(item.ts).toLocaleString()}</div>
+        </div>
+      </li>
+    `).join('');
+  }
+  document.getElementById('history-list').innerHTML=html;
+}
+
+function clearHistoryData(){
+  if(confirm('Apakah yakin hapus semua history? Tindakan tidak bisa dibatalkan.')){
+    localStorage.removeItem('eco_history');
+    renderHistory();
+  }
+}
+
+// === STATS ===
+function loadStats(){
+  let s=localStorage.getItem('eco_stats');
+  if(s) stats=JSON.parse(s);
+}
+
+function saveStats(){
+  localStorage.setItem('eco_stats',JSON.stringify(stats));
+}
+
+function renderStats(){
+  document.getElementById('stat-scans').textContent=stats.scans;
+  document.getElementById('stat-saved').textContent=stats.total;
+  document.getElementById('stat-co2').textContent=Math.round(stats.co2*10)/10;
+  let progress=Math.min(Math.round((stats.scans/20)*100),100);
+  document.getElementById('stat-progress').textContent=progress+'%';
+}
+
+// Force load scripts if not already loaded (aggressive fallback)
+(function(){
+  const forceLoad=()=>{
+    if(!window.tf){
+      console.warn('[FALLBACK] TensorFlow not loaded, forcing load from CDNs');
+      let tfUrls=['https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.9.0/dist/tf.min.js','https://unpkg.com/@tensorflow/tfjs@4.9.0/dist/tf.min.js','https://cdnjs.cloudflare.com/ajax/libs/tensorflow.js/4.9.0/tf.min.js'];
+      tfUrls.forEach((url,i)=>{
+        setTimeout(()=>{
+          if(!window.tf){
+            let s=document.createElement('script');
+            s.src=url;
+            s.onerror=()=>console.warn(`[FALLBACK] TensorFlow load failed from ${url}`);
+            document.head.appendChild(s);
+          }
+        },i*1000);
+      });
+    }
+    if(!window.mobilenet){
+      console.warn('[FALLBACK] MobileNet not loaded, forcing load from CDNs');
+      let mnUrls=['https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.2.2/dist/mobilenet.min.js','https://unpkg.com/@tensorflow-models/mobilenet@2.2.2/dist/mobilenet.min.js'];
+      mnUrls.forEach((url,i)=>{
+        setTimeout(()=>{
+          if(!window.mobilenet){
+            let s=document.createElement('script');
+            s.src=url;
+            s.onerror=()=>console.warn(`[FALLBACK] MobileNet load failed from ${url}`);
+            document.head.appendChild(s);
+          }
+        },i*1000+5000); // Add 5s delay after TF attempts
+      });
+    }
+  };
+  setTimeout(forceLoad,3000); // Try force load after 3s
+  setTimeout(forceLoad,8000); // Try again after 8s
+})();
+
+// Go!
+init();
+  </script>
+</body>
+</html>
